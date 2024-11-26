@@ -293,7 +293,6 @@ def set_rules(kh1world):
         ))
     add_rule(kh1world.get_location("Deep Jungle Hippo's Lagoon Right Chest"),
         lambda state: (
-        
            state.has("High Jump", player)
            or state.has("Progressive Glide", player)
            or options.advanced_logic
@@ -334,22 +333,21 @@ def set_rules(kh1world):
         ))
     add_rule(kh1world.get_location("Agrabah Palace Gates High Close to Palace Chest"),
         lambda state: (
+            state.has_all({
+                "High Jump",
+                "Progressive Glide"}, player)
+            or
             (
-                state.has_all({
-                    "High Jump",
-                    "Progressive Glide"}, player)
-                or
+                options.advanced_logic
+                and
                 (
-                    options.advanced_logic
-                    and
-                    (
-                        state.has("Combo Master", player)
-                        or can_dumbo_skip(state, player)
-                    )
+                    state.has("Combo Master", player)
+                    or can_dumbo_skip(state, player)
+                    or state.has("High Jump", player, 2)
+                    or state.has("Progressive Glide", player)
                 )
             )
             or state.has("High Jump", player, 3)
-            or (options.advanced_logic and state.has("Progressive Glide", player))
         ))
     add_rule(kh1world.get_location("Agrabah Storage Green Trinity Chest"),
         lambda state: state.has("Green Trinity", player))
